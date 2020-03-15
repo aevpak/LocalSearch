@@ -1,4 +1,4 @@
-// main_first.cpp: определяет точку входа для консольного приложения.
+п»ї// main_first.cpp: РѕРїСЂРµРґРµР»СЏРµС‚ С‚РѕС‡РєСѓ РІС…РѕРґР° РґР»СЏ РєРѕРЅСЃРѕР»СЊРЅРѕРіРѕ РїСЂРёР»РѕР¶РµРЅРёСЏ.
 //
 
 #include "stdafx.h"
@@ -52,10 +52,10 @@ int FAIEvent(Event j[], int N) {//First available index in EventList
 	return ind;
 }
 void shiftLeft(Job j[], int N) {
-	Job null = { "null", 0, 0, 0, 0, 0, 0 };//нулевая работа
+	Job null = { "null", 0, 0, 0, 0, 0, 0 };//РЅСѓР»РµРІР°СЏ СЂР°Р±РѕС‚Р°
 	int iter = 0;
 	while (j[0].name == "null") {
-		if (iter > N) break;//костыль на избежание зацикливания
+		if (iter > N) break;//РєРѕСЃС‚С‹Р»СЊ РЅР° РёР·Р±РµР¶Р°РЅРёРµ Р·Р°С†РёРєР»РёРІР°РЅРёСЏ
 		for (int i = 1; i < N; i++) {
 			j[i - 1] = j[i];
 		}
@@ -124,8 +124,8 @@ int findAvailableJob(Job j[], int N) {
 	return ind;
 }
 void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking[], Job packing[], Job buf[], Job output[], int pickingSize, int packingSize, int bufSize, int countJob) {
-	Job null = { "null", 0, 0, 0, 0, 0, 0, MAXTIME, false };//нулевая работа
-	int indToDelete = findIndexByNameInEventList(eventList, countJob, currentEvent.name);//хотим занулить текущий эвент
+	Job null = { "null", 0, 0, 0, 0, 0, 0, MAXTIME, false };//РЅСѓР»РµРІР°СЏ СЂР°Р±РѕС‚Р°
+	int indToDelete = findIndexByNameInEventList(eventList, countJob, currentEvent.name);//С…РѕС‚РёРј Р·Р°РЅСѓР»РёС‚СЊ С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚
 	eventList[indToDelete].time = MAXTIME;
 	eventList[indToDelete].name = "null";
 	eventList[indToDelete].type = 7;
@@ -139,43 +139,43 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 	switch (currentEvent.type)
 	{
 	case 1://picking
-		ind = findIndexByName(picking, pickingSize, currentEvent.name);//ищем индекс на пикинге задачи из эвента
-		bufInd = FAI(buf, bufSize);//ищем свободное место в буфере
-		extraTime = currentEvent.time;//добавочное время с текущего эвента
-		if (bufInd != -1) {//в буфере есть место
+		ind = findIndexByName(picking, pickingSize, currentEvent.name);//РёС‰РµРј РёРЅРґРµРєСЃ РЅР° РїРёРєРёРЅРіРµ Р·Р°РґР°С‡Рё РёР· СЌРІРµРЅС‚Р°
+		bufInd = FAI(buf, bufSize);//РёС‰РµРј СЃРІРѕР±РѕРґРЅРѕРµ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+		extraTime = currentEvent.time;//РґРѕР±Р°РІРѕС‡РЅРѕРµ РІСЂРµРјСЏ СЃ С‚РµРєСѓС‰РµРіРѕ СЌРІРµРЅС‚Р°
+		if (bufInd != -1) {//РІ Р±СѓС„РµСЂРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
 			packingInd = FAI(packing, packingSize);
-			if (packingInd != -1) {//на пэкинге есть место
-				packing[packingInd] = picking[ind];//перенести работу с пикинга на пэкинг
+			if (packingInd != -1) {//РЅР° РїСЌРєРёРЅРіРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
+				packing[packingInd] = picking[ind];//РїРµСЂРµРЅРµСЃС‚Рё СЂР°Р±РѕС‚Сѓ СЃ РїРёРєРёРЅРіР° РЅР° РїСЌРєРёРЅРі
 				picking[ind] = null;
 				shiftLeft(input, countJob);
-				packing[packingInd].allTime += packing[packingInd].timeForPick;//добавить работе время на пикинг к общему времени
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = packing[packingInd].name;//заполнить его задачей с пэкинга
+				packing[packingInd].allTime += packing[packingInd].timeForPick;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїРёРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = packing[packingInd].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				eventList[eventInd].type = 3;
 				eventList[eventInd].time = extraTime + packing[packingInd].timeForPack;
 				cout << packing[packingInd].name << " otpravilas na packing" << endl;
 				if (input[0].name != "null") {
-					picking[ind] = input[0];//на освободившееся место picking новую задачу
+					picking[ind] = input[0];//РЅР° РѕСЃРІРѕР±РѕРґРёРІС€РµРµСЃСЏ РјРµСЃС‚Рѕ picking РЅРѕРІСѓСЋ Р·Р°РґР°С‡Сѓ
 					input[0] = null;
-					shiftLeft(input, countJob);//сдвинуть инпут	
-					picking[ind].startTime = extraTime;//время старта - время текущего эвента
-					eventInd = FAIEvent(eventList, countJob);//ищем место в эвентлисте
-					eventList[eventInd].time = picking[ind].timeForPick + extraTime;//пихаем на это место задачу из пикинга
+					shiftLeft(input, countJob);//СЃРґРІРёРЅСѓС‚СЊ РёРЅРїСѓС‚	
+					picking[ind].startTime = extraTime;//РІСЂРµРјСЏ СЃС‚Р°СЂС‚Р° - РІСЂРµРјСЏ С‚РµРєСѓС‰РµРіРѕ СЌРІРµРЅС‚Р°
+					eventInd = FAIEvent(eventList, countJob);//РёС‰РµРј РјРµСЃС‚Рѕ РІ СЌРІРµРЅС‚Р»РёСЃС‚Рµ
+					eventList[eventInd].time = picking[ind].timeForPick + extraTime;//РїРёС…Р°РµРј РЅР° СЌС‚Рѕ РјРµСЃС‚Рѕ Р·Р°РґР°С‡Сѓ РёР· РїРёРєРёРЅРіР°
 					eventList[eventInd].type = 1;
 					eventList[eventInd].name = picking[ind].name;
 					cout << picking[ind].name << " prishla iz ocheredi na picking" << endl;
 				}
-				eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+				eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 			}
 			else {
-				buf[bufInd] = picking[ind];//в буфер сложить задачу из эвента
+				buf[bufInd] = picking[ind];//РІ Р±СѓС„РµСЂ СЃР»РѕР¶РёС‚СЊ Р·Р°РґР°С‡Сѓ РёР· СЌРІРµРЅС‚Р°
 				int eventInd = FAIEvent(eventList, countJob);
 				eventList[eventInd].time = extraTime;
 				eventList[eventInd].type = 2;
 				eventList[eventInd].name = picking[ind].name;
 				cout << picking[ind].name << " otpravilas v bufer" << endl;
 				if (input[0].name != "null") {
-					picking[ind] = input[0];//на освободившееся место новую задачу
+					picking[ind] = input[0];//РЅР° РѕСЃРІРѕР±РѕРґРёРІС€РµРµСЃСЏ РјРµСЃС‚Рѕ РЅРѕРІСѓСЋ Р·Р°РґР°С‡Сѓ
 					shiftLeft(input, countJob);
 					picking[ind].startTime = extraTime + picking[ind].timeForPick;
 					picking[ind].allTime = extraTime;
@@ -188,17 +188,17 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 				eventListBubbleSort(eventList, countJob);
 			}
 		}
-		else {//заблокирован буфер
+		else {//Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ Р±СѓС„РµСЂ
 			currentEvent.type = 5;
 			picking[ind].blocked = true;
 			int eventInd = FAIEvent(eventList, countJob);
-			eventList[eventInd] = currentEvent;//текущий эвент снова добавляется в эвентлист
+			eventList[eventInd] = currentEvent;//С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚ СЃРЅРѕРІР° РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РІ СЌРІРµРЅС‚Р»РёСЃС‚
 			cout << picking[ind].name << " ne smogla poyti v bufer tak kak on polon" << endl;
 		}
-		//тут нужно пройтись по всем заблокированным работам и дать им ход
-		indPackingEmpty = FAI(packing, packingSize);//ОШИБКА!!!!!
-		while (indPackingEmpty != -1) {//это для буфера
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		//С‚СѓС‚ РЅСѓР¶РЅРѕ РїСЂРѕР№С‚РёСЃСЊ РїРѕ РІСЃРµРј Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹Рј СЂР°Р±РѕС‚Р°Рј Рё РґР°С‚СЊ РёРј С…РѕРґ
+		indPackingEmpty = FAI(packing, packingSize);//РћРЁРР‘РљРђ!!!!!
+		while (indPackingEmpty != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				if (buf[i].blocked) {
@@ -211,9 +211,9 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			if (helpInd != -1) {
 				packing[indPackingEmpty] = buf[helpInd];
 				buf[helpInd] = null;
-				packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//добавить работе время на пэкинг к общему времени
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїСЌРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				eventList[eventInd].type = 3;
 				eventList[eventInd].time = packing[indPackingEmpty].allTime;
 				cout << packing[indPackingEmpty].name << " poshla na packing iz bufera posle razblokirovki" << endl;
@@ -221,10 +221,10 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			}
 			else { break; }
 		}
-		//теперь то же самое для пикинг
+		//С‚РµРїРµСЂСЊ С‚Рѕ Р¶Рµ СЃР°РјРѕРµ РґР»СЏ РїРёРєРёРЅРі
 		indBufEmpty = FAI(buf, bufSize);
-		while (indBufEmpty != -1) {//пока есть место в буфере
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (indBufEmpty != -1) {//РїРѕРєР° РµСЃС‚СЊ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < pickingSize; i++) {
 				if (picking[i].blocked) {
@@ -237,9 +237,9 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			if (helpInd != -1) {
 				buf[indBufEmpty] = picking[helpInd];
 				picking[helpInd] = null;
-				//вот тут нужно думать!!! по идее надо всем увеличить allTIme на величину пикинга уходящей работы
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = buf[indBufEmpty].name;//заполнить его задачей с буфера
+				//РІРѕС‚ С‚СѓС‚ РЅСѓР¶РЅРѕ РґСѓРјР°С‚СЊ!!! РїРѕ РёРґРµРµ РЅР°РґРѕ РІСЃРµРј СѓРІРµР»РёС‡РёС‚СЊ allTIme РЅР° РІРµР»РёС‡РёРЅСѓ РїРёРєРёРЅРіР° СѓС…РѕРґСЏС‰РµР№ СЂР°Р±РѕС‚С‹
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = buf[indBufEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ Р±СѓС„РµСЂР°
 				eventList[eventInd].type = 2;
 				eventList[eventInd].time = buf[indBufEmpty].allTime;
 				indBufEmpty = FAI(packing, packingSize);
@@ -247,34 +247,34 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			}
 			else { break; }
 		}
-		///тут осталось написать обработку случаев эвента из буфера, из пэкинга и если пришел статус блокд
-		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		///С‚СѓС‚ РѕСЃС‚Р°Р»РѕСЃСЊ РЅР°РїРёСЃР°С‚СЊ РѕР±СЂР°Р±РѕС‚РєСѓ СЃР»СѓС‡Р°РµРІ СЌРІРµРЅС‚Р° РёР· Р±СѓС„РµСЂР°, РёР· РїСЌРєРёРЅРіР° Рё РµСЃР»Рё РїСЂРёС€РµР» СЃС‚Р°С‚СѓСЃ Р±Р»РѕРєРґ
+		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		break;
-	case 2://из буфера
-		ind = findIndexByName(buf, bufSize, currentEvent.name);//ищем индекс на пикинге задачи из эвента
+	case 2://РёР· Р±СѓС„РµСЂР°
+		ind = findIndexByName(buf, bufSize, currentEvent.name);//РёС‰РµРј РёРЅРґРµРєСЃ РЅР° РїРёРєРёРЅРіРµ Р·Р°РґР°С‡Рё РёР· СЌРІРµРЅС‚Р°
 		packingInd = FAI(packing, packingSize);
-		if (packingInd != -1) {//на пэкинге есть место
-			packing[packingInd] = buf[ind];//кладем задачу на пэкинг
+		if (packingInd != -1) {//РЅР° РїСЌРєРёРЅРіРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
+			packing[packingInd] = buf[ind];//РєР»Р°РґРµРј Р·Р°РґР°С‡Сѓ РЅР° РїСЌРєРёРЅРі
 			packing[packingInd].allTime += packing[packingInd].timeForPack;
-			int eventInd = FAIEvent(eventList, countJob);//нашли свободное место в эвентлисте
-			eventList[eventInd].name = packing[packingInd].name;//суем в эвентлист задачу
+			int eventInd = FAIEvent(eventList, countJob);//РЅР°С€Р»Рё СЃРІРѕР±РѕРґРЅРѕРµ РјРµСЃС‚Рѕ РІ СЌРІРµРЅС‚Р»РёСЃС‚Рµ
+			eventList[eventInd].name = packing[packingInd].name;//СЃСѓРµРј РІ СЌРІРµРЅС‚Р»РёСЃС‚ Р·Р°РґР°С‡Сѓ
 			eventList[eventInd].time = packing[packingInd].allTime;
 			eventList[eventInd].type = 3;
-			eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+			eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 			cout << packing[packingInd].name << " poshla na packing iz bufera" << endl;
 		}
-		else {//пэкинг занят
+		else {//РїСЌРєРёРЅРі Р·Р°РЅСЏС‚
 			packing[packingInd].blocked = true;
 			currentEvent.type = 5;
 			int eventInd = FAIEvent(eventList, countJob);
-			eventList[eventInd] = currentEvent;//текущий эвент снова добавляется в эвентлист
-			eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+			eventList[eventInd] = currentEvent;//С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚ СЃРЅРѕРІР° РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РІ СЌРІРµРЅС‚Р»РёСЃС‚
+			eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 			cout << packing[packingInd].name << " bula zablokirovana v bufere" << endl;
 		}
-		//тут нужно пройтись по всем заблокированным работам и дать им ход
+		//С‚СѓС‚ РЅСѓР¶РЅРѕ РїСЂРѕР№С‚РёСЃСЊ РїРѕ РІСЃРµРј Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹Рј СЂР°Р±РѕС‚Р°Рј Рё РґР°С‚СЊ РёРј С…РѕРґ
 		indPackingEmpty = FAI(packing, packingSize);
-		while (indPackingEmpty != -1) {//это для буфера
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (indPackingEmpty != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				if (buf[i].blocked) {
@@ -287,9 +287,9 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			if (helpInd != -1) {
 				packing[indPackingEmpty] = buf[helpInd];
 				buf[helpInd] = null;
-				packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//добавить работе время на пикинг к общему времени
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїРёРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				eventList[eventInd].type = 3;
 				eventList[eventInd].time = packing[indPackingEmpty].allTime;
 				indPackingEmpty = FAI(packing, packingSize);
@@ -297,10 +297,10 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			}
 			else { break; }
 		}
-		//теперь то же самое для пикинг
+		//С‚РµРїРµСЂСЊ С‚Рѕ Р¶Рµ СЃР°РјРѕРµ РґР»СЏ РїРёРєРёРЅРі
 		indBufEmpty = FAI(buf, bufSize);
-		while (indBufEmpty != -1) {//пока есть место в буфере
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (indBufEmpty != -1) {//РїРѕРєР° РµСЃС‚СЊ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < pickingSize; i++) {
 				if (picking[i].blocked) {
@@ -313,9 +313,9 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			if (helpInd != -1) {
 				buf[indBufEmpty] = picking[helpInd];
 				picking[helpInd] = null;
-				//вот тут нужно думать!!! по идее надо всем увеличить allTIme на величину пикинга уходящей работы
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = buf[indBufEmpty].name;//заполнить его задачей с буфера
+				//РІРѕС‚ С‚СѓС‚ РЅСѓР¶РЅРѕ РґСѓРјР°С‚СЊ!!! РїРѕ РёРґРµРµ РЅР°РґРѕ РІСЃРµРј СѓРІРµР»РёС‡РёС‚СЊ allTIme РЅР° РІРµР»РёС‡РёРЅСѓ РїРёРєРёРЅРіР° СѓС…РѕРґСЏС‰РµР№ СЂР°Р±РѕС‚С‹
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = buf[indBufEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ Р±СѓС„РµСЂР°
 				eventList[eventInd].type = 2;
 				eventList[eventInd].time = buf[indBufEmpty].allTime;
 				indBufEmpty = FAI(packing, packingSize);
@@ -323,15 +323,15 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 			}
 			else { break; }
 		}
-		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		break;
-	case 3://если эвент из пэкинга
+	case 3://РµСЃР»Рё СЌРІРµРЅС‚ РёР· РїСЌРєРёРЅРіР°
 		outInd = FAI(output, countJob);
 		packingInd = findIndexByName(packing, packingSize, currentEvent.name);
-		output[outInd] = packing[packingInd];//пихаем работу в выполненые
+		output[outInd] = packing[packingInd];//РїРёС…Р°РµРј СЂР°Р±РѕС‚Сѓ РІ РІС‹РїРѕР»РЅРµРЅС‹Рµ
 		output[outInd].allTime += output[outInd].timeForPack;
 		expandBufTime(buf, bufSize, output[outInd].timeForPack);
-		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		packing[packingInd] = null;
 		//cout << "for test " << output[outInd].allTime << endl;
 		cout << output[outInd].name << " ushla iz packing v output" << endl;
@@ -342,8 +342,8 @@ void doSomething(Event currentEvent, Event eventList[], Job input[], Job picking
 	}
 }
 void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], Job packing[], Job buf[], Job output[], int pickingSize, int packingSize, int bufSize, int countJob) {
-	Job null = { "null", 0, 0, 0, 0, 0, 0, MAXTIME, false };//нулевая работа
-	int indToDelete = findIndexByNameInEventList(eventList, countJob, currentEvent.name);//хотим занулить текущий эвент
+	Job null = { "null", 0, 0, 0, 0, 0, 0, MAXTIME, false };//РЅСѓР»РµРІР°СЏ СЂР°Р±РѕС‚Р°
+	int indToDelete = findIndexByNameInEventList(eventList, countJob, currentEvent.name);//С…РѕС‚РёРј Р·Р°РЅСѓР»РёС‚СЊ С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚
 	eventList[indToDelete].time = MAXTIME;
 	eventList[indToDelete].name = "null";
 	eventList[indToDelete].type = 7;
@@ -360,45 +360,45 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 	switch (currentEvent.type)
 	{
 	case 1://picking
-		ind = findIndexByName(picking, pickingSize, currentEvent.name);//ищем индекс на пикинге задачи из эвента
-		bufInd = FAI(buf, bufSize);//ищем свободное место в буфере
-		extraTime = currentEvent.time;//добавочное время с текущего эвента
-		if (bufInd != -1) {//в буфере есть место
+		ind = findIndexByName(picking, pickingSize, currentEvent.name);//РёС‰РµРј РёРЅРґРµРєСЃ РЅР° РїРёРєРёРЅРіРµ Р·Р°РґР°С‡Рё РёР· СЌРІРµРЅС‚Р°
+		bufInd = FAI(buf, bufSize);//РёС‰РµРј СЃРІРѕР±РѕРґРЅРѕРµ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+		extraTime = currentEvent.time;//РґРѕР±Р°РІРѕС‡РЅРѕРµ РІСЂРµРјСЏ СЃ С‚РµРєСѓС‰РµРіРѕ СЌРІРµРЅС‚Р°
+		if (bufInd != -1) {//РІ Р±СѓС„РµСЂРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
 			//packingInd = FAI(packing, packingSize);
-			///*тут это не нужно*/if (packingInd != -1) {//на пэкинге есть место
-			//	packing[packingInd] = picking[ind];//перенести работу с пикинга на пэкинг
+			///*С‚СѓС‚ СЌС‚Рѕ РЅРµ РЅСѓР¶РЅРѕ*/if (packingInd != -1) {//РЅР° РїСЌРєРёРЅРіРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
+			//	packing[packingInd] = picking[ind];//РїРµСЂРµРЅРµСЃС‚Рё СЂР°Р±РѕС‚Сѓ СЃ РїРёРєРёРЅРіР° РЅР° РїСЌРєРёРЅРі
 			//	picking[ind] = null;
 			//	shiftLeft(input, countJob);
-			//	packing[packingInd].allTime += packing[packingInd].timeForPick;//добавить работе время на пикинг к общему времени
-			//	int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-			//	eventList[eventInd].name = packing[packingInd].name;//заполнить его задачей с пэкинга
+			//	packing[packingInd].allTime += packing[packingInd].timeForPick;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїРёРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+			//	int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+			//	eventList[eventInd].name = packing[packingInd].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 			//	eventList[eventInd].type = 3;
 			//	eventList[eventInd].time = extraTime + packing[packingInd].timeForPack;
 			//	cout << packing[packingInd].name << " otpravilas na packing" << endl;
 			//	if (input[0].name != "null") {
-			//		picking[ind] = input[0];//на освободившееся место picking новую задачу
+			//		picking[ind] = input[0];//РЅР° РѕСЃРІРѕР±РѕРґРёРІС€РµРµСЃСЏ РјРµСЃС‚Рѕ picking РЅРѕРІСѓСЋ Р·Р°РґР°С‡Сѓ
 			//		input[0] = null;
-			//		shiftLeft(input, countJob);//сдвинуть инпут	
-			//		picking[ind].startTime = extraTime;//время старта - время текущего эвента
-			//		eventInd = FAIEvent(eventList, countJob);//ищем место в эвентлисте
-			//		eventList[eventInd].time = picking[ind].timeForPick + extraTime;//пихаем на это место задачу из пикинга
+			//		shiftLeft(input, countJob);//СЃРґРІРёРЅСѓС‚СЊ РёРЅРїСѓС‚	
+			//		picking[ind].startTime = extraTime;//РІСЂРµРјСЏ СЃС‚Р°СЂС‚Р° - РІСЂРµРјСЏ С‚РµРєСѓС‰РµРіРѕ СЌРІРµРЅС‚Р°
+			//		eventInd = FAIEvent(eventList, countJob);//РёС‰РµРј РјРµСЃС‚Рѕ РІ СЌРІРµРЅС‚Р»РёСЃС‚Рµ
+			//		eventList[eventInd].time = picking[ind].timeForPick + extraTime;//РїРёС…Р°РµРј РЅР° СЌС‚Рѕ РјРµСЃС‚Рѕ Р·Р°РґР°С‡Сѓ РёР· РїРёРєРёРЅРіР°
 			//		eventList[eventInd].type = 1;
 			//		eventList[eventInd].name = picking[ind].name;
 			//		cout << picking[ind].name << " prishla iz ocheredi na picking" << endl;
 			//	}
-			//	eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+			//	eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 			//}
 
-			buf[bufInd] = picking[ind];//в буфер сложить задачу из эвента
-			buf[bufInd].allTime = extraTime;///тут обратить внимание, возможно время не то
+			buf[bufInd] = picking[ind];//РІ Р±СѓС„РµСЂ СЃР»РѕР¶РёС‚СЊ Р·Р°РґР°С‡Сѓ РёР· СЌРІРµРЅС‚Р°
+			buf[bufInd].allTime = extraTime;///С‚СѓС‚ РѕР±СЂР°С‚РёС‚СЊ РІРЅРёРјР°РЅРёРµ, РІРѕР·РјРѕР¶РЅРѕ РІСЂРµРјСЏ РЅРµ С‚Рѕ
 			/*int eventInd = FAIEvent(eventList, countJob);
-			eventList[eventInd].time = extraTime;///тут обратить внимание, возможно время не то
+			eventList[eventInd].time = extraTime;///С‚СѓС‚ РѕР±СЂР°С‚РёС‚СЊ РІРЅРёРјР°РЅРёРµ, РІРѕР·РјРѕР¶РЅРѕ РІСЂРµРјСЏ РЅРµ С‚Рѕ
 			eventList[eventInd].type = 2;
 			eventList[eventInd].name = picking[ind].name;*/
 			cout << buf[bufInd].name << " otpravilas v bufer" << endl;
-			picking[ind] = null;//освободили место на пикинге
-			///похоже это тут не нужноif (input[0].name != "null") {
-			//	picking[ind] = input[0];//на освободившееся место новую задачу
+			picking[ind] = null;//РѕСЃРІРѕР±РѕРґРёР»Рё РјРµСЃС‚Рѕ РЅР° РїРёРєРёРЅРіРµ
+			///РїРѕС…РѕР¶Рµ СЌС‚Рѕ С‚СѓС‚ РЅРµ РЅСѓР¶РЅРѕif (input[0].name != "null") {
+			//	picking[ind] = input[0];//РЅР° РѕСЃРІРѕР±РѕРґРёРІС€РµРµСЃСЏ РјРµСЃС‚Рѕ РЅРѕРІСѓСЋ Р·Р°РґР°С‡Сѓ
 			//	shiftLeft(input, countJob);
 			//	picking[ind].startTime = extraTime + picking[ind].timeForPick;
 			//	picking[ind].allTime = extraTime;
@@ -409,17 +409,17 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			//	cout << picking[ind].name << " prishla na piking" << endl;
 			//}
 		}
-		else {//заблокирован буфер
+		else {//Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ Р±СѓС„РµСЂ
 			currentEvent.type = 5;
 			picking[ind].blocked = true;
 			//int eventInd = FAIEvent(eventList, countJob);
-			//eventList[eventInd] = currentEvent;//текущий эвент снова добавляется в эвентлист
+			//eventList[eventInd] = currentEvent;//С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚ СЃРЅРѕРІР° РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РІ СЌРІРµРЅС‚Р»РёСЃС‚
 			cout << picking[ind].name << " ne smogla poyti v bufer tak kak on polon" << endl;
 		}
-		////тут нужно пройтись по всем заблокированным работам и дать им ход
+		////С‚СѓС‚ РЅСѓР¶РЅРѕ РїСЂРѕР№С‚РёСЃСЊ РїРѕ РІСЃРµРј Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹Рј СЂР°Р±РѕС‚Р°Рј Рё РґР°С‚СЊ РёРј С…РѕРґ
 		//indPackingEmpty = FAI(packing, packingSize);
-		//while (indPackingEmpty != -1) {//это для буфера
-		//	int helpTime = MAXTIME;//ищем самую быструю на packing
+		//while (indPackingEmpty != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
+		//	int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 		//	int helpInd = -1;
 		//	for (int i = 0; i < bufSize; i++) {
 		//		if (buf[i].blocked) {
@@ -432,9 +432,9 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//	if (helpInd != -1) {
 		//		packing[indPackingEmpty] = buf[helpInd];
 		//		buf[helpInd] = null;
-		//		packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//добавить работе время на пэкинг к общему времени
-		//		int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-		//		eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+		//		packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїСЌРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+		//		int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+		//		eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 		//		eventList[eventInd].type = 3;
 		//		eventList[eventInd].time = packing[indPackingEmpty].allTime;
 		//		cout << packing[indPackingEmpty].name << " poshla na packing iz bufera posle razblokirovki" << endl;
@@ -442,10 +442,10 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//	}
 		//	else { break; }
 		//}
-		////теперь то же самое для пикинг
+		////С‚РµРїРµСЂСЊ С‚Рѕ Р¶Рµ СЃР°РјРѕРµ РґР»СЏ РїРёРєРёРЅРі
 		//indBufEmpty = FAI(buf, bufSize);
-		//while (indBufEmpty != -1) {//пока есть место в буфере
-		//	int helpTime = MAXTIME;//ищем самую быструю на packing
+		//while (indBufEmpty != -1) {//РїРѕРєР° РµСЃС‚СЊ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+		//	int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 		//	int helpInd = -1;
 		//	for (int i = 0; i < pickingSize; i++) {
 		//		if (picking[i].blocked) {
@@ -458,9 +458,9 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//	if (helpInd != -1) {
 		//		buf[indBufEmpty] = picking[helpInd];
 		//		picking[helpInd] = null;
-		//		//вот тут нужно думать!!! по идее надо всем увеличить allTIme на величину пикинга уходящей работы
-		//		int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-		//		eventList[eventInd].name = buf[indBufEmpty].name;//заполнить его задачей с буфера
+		//		//РІРѕС‚ С‚СѓС‚ РЅСѓР¶РЅРѕ РґСѓРјР°С‚СЊ!!! РїРѕ РёРґРµРµ РЅР°РґРѕ РІСЃРµРј СѓРІРµР»РёС‡РёС‚СЊ allTIme РЅР° РІРµР»РёС‡РёРЅСѓ РїРёРєРёРЅРіР° СѓС…РѕРґСЏС‰РµР№ СЂР°Р±РѕС‚С‹
+		//		int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+		//		eventList[eventInd].name = buf[indBufEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ Р±СѓС„РµСЂР°
 		//		eventList[eventInd].type = 2;
 		//		eventList[eventInd].time = buf[indBufEmpty].allTime;
 		//		indBufEmpty = FAI(packing, packingSize);
@@ -468,15 +468,15 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//	}
 		//	else { break; }
 		//}
-		/////тут осталось написать обработку случаев эвента из буфера, из пэкинга и если пришел статус блокд
-		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
-		//это ряд действий
-		//для буфера:
+		/////С‚СѓС‚ РѕСЃС‚Р°Р»РѕСЃСЊ РЅР°РїРёСЃР°С‚СЊ РѕР±СЂР°Р±РѕС‚РєСѓ СЃР»СѓС‡Р°РµРІ СЌРІРµРЅС‚Р° РёР· Р±СѓС„РµСЂР°, РёР· РїСЌРєРёРЅРіР° Рё РµСЃР»Рё РїСЂРёС€РµР» СЃС‚Р°С‚СѓСЃ Р±Р»РѕРєРґ
+		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
+		//СЌС‚Рѕ СЂСЏРґ РґРµР№СЃС‚РІРёР№
+		//РґР»СЏ Р±СѓС„РµСЂР°:
 		availableBufJob = findAvailableJob(buf, bufSize);
 		indPackingEmpty = FAI(packing, packingSize);
 
-		while (indPackingEmpty != -1 && availableBufJob != -1) {//это для буфера
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (indPackingEmpty != -1 && availableBufJob != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				//cout << buf[i].timeForPack << " TEST!!! " << buf[i].name << endl;
@@ -488,22 +488,22 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			if (helpInd != -1) {
 				packing[indPackingEmpty] = buf[helpInd];
 				buf[helpInd] = null;
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				eventList[eventInd].type = 3;
 				eventList[eventInd].time = packing[indPackingEmpty].timeForPack + extraTime;
 				cout << packing[indPackingEmpty].name << " poshla na packing iz bufera posle ojidaniya" << endl;
 				indPackingEmpty = FAI(packing, packingSize);
 				availableBufJob = findAvailableJob(buf, bufSize);
-				///а что тут со статусом blocked???
+				///Р° С‡С‚Рѕ С‚СѓС‚ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј blocked???
 			}
 			else { break; }
 		}
-		//это для пикинга
+		//СЌС‚Рѕ РґР»СЏ РїРёРєРёРЅРіР°
 		availablePickingJob = findAvailableJob(picking, pickingSize);
 		indBufEmpty = FAI(buf, bufSize);
-		while (availablePickingJob != -1 && indBufEmpty != -1) {//это для пикинга
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (availablePickingJob != -1 && indBufEmpty != -1) {//СЌС‚Рѕ РґР»СЏ РїРёРєРёРЅРіР°
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				if (picking[i].timeForPack < helpTime && buf[i].name != "null") {
@@ -514,18 +514,18 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			if (helpInd != -1) {
 				buf[indPackingEmpty] = picking[helpInd];
 				picking[helpInd] = null;
-				///это тут вроде не нужноint eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				//eventList[eventInd].name = buf[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				///СЌС‚Рѕ С‚СѓС‚ РІСЂРѕРґРµ РЅРµ РЅСѓР¶РЅРѕint eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				//eventList[eventInd].name = buf[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				//eventList[eventInd].type = 3;
 				//eventList[eventInd].time = packing[indPackingEmpty].timeForPack + extraTime;
 				cout << buf[indPackingEmpty].name << " poshla v bufer iz pickinga posle ojidaniya" << endl;
 				availablePickingJob = findAvailableJob(picking, pickingSize);
 				indBufEmpty = FAI(buf, bufSize);
-				///а что тут со статусом blocked???
+				///Р° С‡С‚Рѕ С‚СѓС‚ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј blocked???
 			}
 			else { break; }
 		}
-		//новые задачи на picking
+		//РЅРѕРІС‹Рµ Р·Р°РґР°С‡Рё РЅР° picking
 		indPickingEmpty = FAI(picking, pickingSize);
 		while (indPickingEmpty != -1 && input[0].name != "null") {
 			picking[indPickingEmpty] = input[0];
@@ -541,31 +541,31 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			eventListBubbleSort(eventList, countJob);
 		}
 		break;
-		///тут теперь нет буфера case 2://из буфера
-		//	ind = findIndexByName(buf, bufSize, currentEvent.name);//ищем индекс в буфере задачи из эвента
+		///С‚СѓС‚ С‚РµРїРµСЂСЊ РЅРµС‚ Р±СѓС„РµСЂР° case 2://РёР· Р±СѓС„РµСЂР°
+		//	ind = findIndexByName(buf, bufSize, currentEvent.name);//РёС‰РµРј РёРЅРґРµРєСЃ РІ Р±СѓС„РµСЂРµ Р·Р°РґР°С‡Рё РёР· СЌРІРµРЅС‚Р°
 		//	packingInd = FAI(packing, packingSize);
-		//	if (packingInd != -1) {//на пэкинге есть место
-		//		packing[packingInd] = buf[ind];//кладем задачу на пэкинг
+		//	if (packingInd != -1) {//РЅР° РїСЌРєРёРЅРіРµ РµСЃС‚СЊ РјРµСЃС‚Рѕ
+		//		packing[packingInd] = buf[ind];//РєР»Р°РґРµРј Р·Р°РґР°С‡Сѓ РЅР° РїСЌРєРёРЅРі
 		//		packing[packingInd].allTime += packing[packingInd].timeForPack;
-		//		int eventInd = FAIEvent(eventList, countJob);//нашли свободное место в эвентлисте
-		//		eventList[eventInd].name = packing[packingInd].name;//суем в эвентлист задачу
+		//		int eventInd = FAIEvent(eventList, countJob);//РЅР°С€Р»Рё СЃРІРѕР±РѕРґРЅРѕРµ РјРµСЃС‚Рѕ РІ СЌРІРµРЅС‚Р»РёСЃС‚Рµ
+		//		eventList[eventInd].name = packing[packingInd].name;//СЃСѓРµРј РІ СЌРІРµРЅС‚Р»РёСЃС‚ Р·Р°РґР°С‡Сѓ
 		//		eventList[eventInd].time = packing[packingInd].allTime;
 		//		eventList[eventInd].type = 3;
-		//		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		//		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		//		cout << packing[packingInd].name << " poshla na packing iz bufera" << endl;
 		//	}
-		//	else {//пэкинг занят
+		//	else {//РїСЌРєРёРЅРі Р·Р°РЅСЏС‚
 		//		packing[packingInd].blocked = true;
 		//		currentEvent.type = 5;
 		//		int eventInd = FAIEvent(eventList, countJob);
-		//		eventList[eventInd] = currentEvent;//текущий эвент снова добавляется в эвентлист
-		//		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		//		eventList[eventInd] = currentEvent;//С‚РµРєСѓС‰РёР№ СЌРІРµРЅС‚ СЃРЅРѕРІР° РґРѕР±Р°РІР»СЏРµС‚СЃСЏ РІ СЌРІРµРЅС‚Р»РёСЃС‚
+		//		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		//		cout << packing[packingInd].name << " bula zablokirovana v bufere" << endl;
 		//	}
-		//	//тут нужно пройтись по всем заблокированным работам и дать им ход
+		//	//С‚СѓС‚ РЅСѓР¶РЅРѕ РїСЂРѕР№С‚РёСЃСЊ РїРѕ РІСЃРµРј Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅРЅС‹Рј СЂР°Р±РѕС‚Р°Рј Рё РґР°С‚СЊ РёРј С…РѕРґ
 		//	indPackingEmpty = FAI(packing, packingSize);
-		//	while (indPackingEmpty != -1) {//это для буфера
-		//		int helpTime = MAXTIME;//ищем самую быструю на packing
+		//	while (indPackingEmpty != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
+		//		int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 		//		int helpInd = -1;
 		//		for (int i = 0; i < bufSize; i++) {
 		//			if (buf[i].blocked) {
@@ -578,9 +578,9 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//		if (helpInd != -1) {
 		//			packing[indPackingEmpty] = buf[helpInd];
 		//			buf[helpInd] = null;
-		//			packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//добавить работе время на пикинг к общему времени
-		//			int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-		//			eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+		//			packing[indPackingEmpty].allTime += packing[indPackingEmpty].timeForPack;//РґРѕР±Р°РІРёС‚СЊ СЂР°Р±РѕС‚Рµ РІСЂРµРјСЏ РЅР° РїРёРєРёРЅРі Рє РѕР±С‰РµРјСѓ РІСЂРµРјРµРЅРё
+		//			int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+		//			eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 		//			eventList[eventInd].type = 3;
 		//			eventList[eventInd].time = packing[indPackingEmpty].allTime;
 		//			indPackingEmpty = FAI(packing, packingSize);
@@ -588,10 +588,10 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//		}
 		//		else { break; }
 		//	}
-		//	//теперь то же самое для пикинг
+		//	//С‚РµРїРµСЂСЊ С‚Рѕ Р¶Рµ СЃР°РјРѕРµ РґР»СЏ РїРёРєРёРЅРі
 		//	indBufEmpty = FAI(buf, bufSize);
-		//	while (indBufEmpty != -1) {//пока есть место в буфере
-		//		int helpTime = MAXTIME;//ищем самую быструю на packing
+		//	while (indBufEmpty != -1) {//РїРѕРєР° РµСЃС‚СЊ РјРµСЃС‚Рѕ РІ Р±СѓС„РµСЂРµ
+		//		int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 		//		int helpInd = -1;
 		//		for (int i = 0; i < pickingSize; i++) {
 		//			if (picking[i].blocked) {
@@ -604,9 +604,9 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//		if (helpInd != -1) {
 		//			buf[indBufEmpty] = picking[helpInd];
 		//			picking[helpInd] = null;
-		//			//вот тут нужно думать!!! по идее надо всем увеличить allTIme на величину пикинга уходящей работы
-		//			int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-		//			eventList[eventInd].name = buf[indBufEmpty].name;//заполнить его задачей с буфера
+		//			//РІРѕС‚ С‚СѓС‚ РЅСѓР¶РЅРѕ РґСѓРјР°С‚СЊ!!! РїРѕ РёРґРµРµ РЅР°РґРѕ РІСЃРµРј СѓРІРµР»РёС‡РёС‚СЊ allTIme РЅР° РІРµР»РёС‡РёРЅСѓ РїРёРєРёРЅРіР° СѓС…РѕРґСЏС‰РµР№ СЂР°Р±РѕС‚С‹
+		//			int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+		//			eventList[eventInd].name = buf[indBufEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ Р±СѓС„РµСЂР°
 		//			eventList[eventInd].type = 2;
 		//			eventList[eventInd].time = buf[indBufEmpty].allTime;
 		//			indBufEmpty = FAI(packing, packingSize);
@@ -614,16 +614,16 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//		}
 		//		else { break; }
 		//	}
-		//	eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		//	eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		//	break;
-	case 3://если эвент из пэкинга
-		extraTime = currentEvent.time;//добавочное время с текущего эвента
+	case 3://РµСЃР»Рё СЌРІРµРЅС‚ РёР· РїСЌРєРёРЅРіР°
+		extraTime = currentEvent.time;//РґРѕР±Р°РІРѕС‡РЅРѕРµ РІСЂРµРјСЏ СЃ С‚РµРєСѓС‰РµРіРѕ СЌРІРµРЅС‚Р°
 		outInd = FAI(output, countJob);
 		packingInd = findIndexByName(packing, packingSize, currentEvent.name);
-		output[outInd] = packing[packingInd];//пихаем работу в выполненые
+		output[outInd] = packing[packingInd];//РїРёС…Р°РµРј СЂР°Р±РѕС‚Сѓ РІ РІС‹РїРѕР»РЅРµРЅС‹Рµ
 		output[outInd].allTime = extraTime;
-		//expandBufTime(buf, bufSize, output[outInd].timeForPack); вот насчет этого подумать надо
-		eventListBubbleSort(eventList, countJob);//в конце сортируем эвентлист
+		//expandBufTime(buf, bufSize, output[outInd].timeForPack); РІРѕС‚ РЅР°СЃС‡РµС‚ СЌС‚РѕРіРѕ РїРѕРґСѓРјР°С‚СЊ РЅР°РґРѕ
+		eventListBubbleSort(eventList, countJob);//РІ РєРѕРЅС†Рµ СЃРѕСЂС‚РёСЂСѓРµРј СЌРІРµРЅС‚Р»РёСЃС‚
 		packing[packingInd] = null;
 		cout << output[outInd].name << " ushla iz packing v output" << endl;
 		availableBufJob = findAvailableJob(buf, bufSize);
@@ -631,9 +631,9 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 		//cout << availableBufJob << " super test!! " << indPackingEmpty << endl;
 		//printNames(packing, packingSize);
 
-		while (indPackingEmpty != -1 && availableBufJob != -1) {//это для буфера
+		while (indPackingEmpty != -1 && availableBufJob != -1) {//СЌС‚Рѕ РґР»СЏ Р±СѓС„РµСЂР°
 			printNames(buf, bufSize);
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				if (buf[i].timeForPack < helpTime && buf[i].name != "null") {
@@ -645,22 +645,22 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			if (helpInd != -1) {
 				packing[indPackingEmpty] = buf[helpInd];
 				buf[helpInd] = null;
-				int eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				eventList[eventInd].name = packing[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				int eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				eventList[eventInd].name = packing[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				eventList[eventInd].type = 3;
 				eventList[eventInd].time = packing[indPackingEmpty].timeForPack + extraTime;
 				cout << packing[indPackingEmpty].name << " poshla na packing iz bufera posle ojidaniya" << endl;
 				indPackingEmpty = FAI(packing, packingSize);
 				availableBufJob = findAvailableJob(buf, bufSize);
-				///а что тут со статусом blocked???
+				///Р° С‡С‚Рѕ С‚СѓС‚ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј blocked???
 			}
 			else { break; }
 		}
-		//это для пикинга
+		//СЌС‚Рѕ РґР»СЏ РїРёРєРёРЅРіР°
 		availablePickingJob = findAvailableJob(picking, pickingSize);
 		indBufEmpty = FAI(buf, bufSize);
-		while (availablePickingJob != -1 && indBufEmpty != -1) {//это для пикинга
-			int helpTime = MAXTIME;//ищем самую быструю на packing
+		while (availablePickingJob != -1 && indBufEmpty != -1) {//СЌС‚Рѕ РґР»СЏ РїРёРєРёРЅРіР°
+			int helpTime = MAXTIME;//РёС‰РµРј СЃР°РјСѓСЋ Р±С‹СЃС‚СЂСѓСЋ РЅР° packing
 			int helpInd = -1;
 			for (int i = 0; i < bufSize; i++) {
 				if (picking[i].timeForPack < helpTime  && picking[i].name != "null") {
@@ -671,18 +671,18 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 			if (helpInd != -1) {
 				buf[indPackingEmpty] = picking[helpInd];
 				picking[helpInd] = null;
-				///это тут вроде не нужноint eventInd = FAIEvent(eventList, countJob);//найти пустой эвент в листе
-				//eventList[eventInd].name = buf[indPackingEmpty].name;//заполнить его задачей с пэкинга
+				///СЌС‚Рѕ С‚СѓС‚ РІСЂРѕРґРµ РЅРµ РЅСѓР¶РЅРѕint eventInd = FAIEvent(eventList, countJob);//РЅР°Р№С‚Рё РїСѓСЃС‚РѕР№ СЌРІРµРЅС‚ РІ Р»РёСЃС‚Рµ
+				//eventList[eventInd].name = buf[indPackingEmpty].name;//Р·Р°РїРѕР»РЅРёС‚СЊ РµРіРѕ Р·Р°РґР°С‡РµР№ СЃ РїСЌРєРёРЅРіР°
 				//eventList[eventInd].type = 3;
 				//eventList[eventInd].time = packing[indPackingEmpty].timeForPack + extraTime;
 				cout << buf[indPackingEmpty].name << " poshla v bufer iz pickinga posle ojidaniya" << endl;
 				availablePickingJob = findAvailableJob(picking, pickingSize);
 				indBufEmpty = FAI(buf, bufSize);
-				///а что тут со статусом blocked???
+				///Р° С‡С‚Рѕ С‚СѓС‚ СЃРѕ СЃС‚Р°С‚СѓСЃРѕРј blocked???
 			}
 			else { break; }
 		}
-		//новые задачи на picking
+		//РЅРѕРІС‹Рµ Р·Р°РґР°С‡Рё РЅР° picking
 		indPickingEmpty = FAI(picking, pickingSize);
 		while (indPickingEmpty != -1 && input[0].name != "null") {
 			picking[indPickingEmpty] = input[0];
@@ -705,20 +705,20 @@ void doEvent(Event currentEvent, Event eventList[], Job input[], Job picking[], 
 }
 int main()
 {
-	int bufSize = 2;//размер буфера		
-	int pickingSize = 2;//количество машин на пикинге
-	int packingSize = 2;//количество машин на пэкинге
-	int countJob = 3;//количество работ
-	int time = 0;//общее время выполнения
-	Event *eventList = new Event[countJob];//эвент лист
-	Job *input = new Job[countJob];//входная последовательность
-	Job *picking = new Job[pickingSize];//места под работы на пикинге	
-	Job *packing = new Job[packingSize];//места под работы на пэкинге
-										//Job j = { "123", 4, 5, 6, 7, 8, 9 };
+	int bufSize = 2;//СЂР°Р·РјРµСЂ Р±СѓС„РµСЂР°		
+	int pickingSize = 2;//РєРѕР»РёС‡РµСЃС‚РІРѕ РјР°С€РёРЅ РЅР° РїРёРєРёРЅРіРµ
+	int packingSize = 2;//РєРѕР»РёС‡РµСЃС‚РІРѕ РјР°С€РёРЅ РЅР° РїСЌРєРёРЅРіРµ
+	int countJob = 3;//РєРѕР»РёС‡РµСЃС‚РІРѕ СЂР°Р±РѕС‚
+	int time = 0;//РѕР±С‰РµРµ РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ
+	Event *eventList = new Event[countJob];//СЌРІРµРЅС‚ Р»РёСЃС‚
+	Job *input = new Job[countJob];//РІС…РѕРґРЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ
+	Job *picking = new Job[pickingSize];//РјРµСЃС‚Р° РїРѕРґ СЂР°Р±РѕС‚С‹ РЅР° РїРёРєРёРЅРіРµ	
+	Job *packing = new Job[packingSize];//РјРµСЃС‚Р° РїРѕРґ СЂР°Р±РѕС‚С‹ РЅР° РїСЌРєРёРЅРіРµ
+										//Job j =  { "123", 4, 5, 6, 7, 8, 9 };
 										//input[0] = j;
-	Job *buf = new Job[bufSize];//места под работы в буфере
-	Job *output = new Job[countJob];//выходная последовательность
-	Job null = { "null", 0, 0, 0, 0, 0, 0 };//нулевая работа
+	Job *buf = new Job[bufSize];//РјРµСЃС‚Р° РїРѕРґ СЂР°Р±РѕС‚С‹ РІ Р±СѓС„РµСЂРµ
+	Job *output = new Job[countJob];//РІС‹С…РѕРґРЅР°СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ
+	Job null = { "null", 0, 0, 0, 0, 0, 0 };//РЅСѓР»РµРІР°СЏ СЂР°Р±РѕС‚Р°
 	for (int i = 0; i < pickingSize; i++) {
 		picking[i] = null;
 	}
@@ -755,10 +755,10 @@ int main()
 	input[1] = j;
 	j = { "345", 4, 5, 6, 777, 8, 9 };
 	input[2] = j;*/
-	//в проге косяк с присвоением времени на событиях
-	//и нет обработки состояний блокд
+	//РІ РїСЂРѕРіРµ РєРѕСЃСЏРє СЃ РїСЂРёСЃРІРѕРµРЅРёРµРј РІСЂРµРјРµРЅРё РЅР° СЃРѕР±С‹С‚РёСЏС…
+	//Рё РЅРµС‚ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕСЃС‚РѕСЏРЅРёР№ Р±Р»РѕРєРґ
 
-	//отсюда начинается программа
+	//РѕС‚СЃСЋРґР° РЅР°С‡РёРЅР°РµС‚СЃСЏ РїСЂРѕРіСЂР°РјРјР°
 	for (int i = 0; i < pickingSize && i < countJob; i++) {
 		picking[i] = input[i];
 		picking[i].startTime = 0;
