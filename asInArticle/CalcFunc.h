@@ -17,5 +17,6 @@ typedef struct Job {
 	int allTime;
 	bool blocked;
 } Job;
-int calcFunc();
+int calcFunc(Job input[], int bufSize, int pickingSize, int packingSize, int countJob);
+void printNames(Job j[], int N);
 #endif
